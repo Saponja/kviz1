@@ -43,6 +43,30 @@ hcolors = ((219,176,102), (204,153,51), (223,129,35))
 
 #rect = pygame.Rect((0, 40), (width, 100))
 
+def quest(win2):
+    runn = True
+    text = readFromMongo()
+    win2.blit(text[0], (100, 50))
+    pygame.draw.rect(win2, hcolors[0], (0, 170, width, 100))
+    win2.blit(text[1], (100, 200))
+    win2.blit(i10, (50, 208))
+    pygame.draw.rect(win2, hcolors[1], (0, 320, width, 100))
+    win2.blit(text[2], (100, 350))
+    win2.blit(i10, (50, 358))
+    pygame.draw.rect(win2, hcolors[2], (0, 470, width, 100))
+    win2.blit(text[3], (100, 500))
+    win2.blit(i10, (50, 508))
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            runn = False
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            pos_x, pos_y = pygame.mouse.get_pos()
+            if 170 < pos_y < 270:
+                win2.blit(i11, (50, 208))
+                pygame.display.update()
+
+    return runn
+
 
 def readFromMongo():
     rnd = randint(1,3)
@@ -64,30 +88,15 @@ def gameWindow():
     running2 = True
     active = False
     while running2:
+
+
         win2 = pygame.display.set_mode((width, height))
         win2.blit(i9, (0,0))
         #win2.fill((119, 136, 153))
-        text = readFromMongo()
-        if active:
-            win2.blit(text[0], (100, 50))
-            pygame.draw.rect(win2, hcolors[0], (0, 170, width, 100))
-            win2.blit(text[1], (100, 200))
-            win2.blit(i10, (50,208))
-            pygame.draw.rect(win2, hcolors[1], (0, 320, width, 100))
-            win2.blit(text[2], (100, 350))
-            win2.blit(i10, (50, 358))
-            pygame.draw.rect(win2, hcolors[2] , (0, 470, width, 100))
-            win2.blit(text[3], (100, 500))
-            win2.blit(i10, (50, 508))
-            pygame.time.wait(3000)
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running2 = False
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                pos_x, pos_y = pygame.mouse.get_pos()
-                if  170 < pos_y < 270:
-                    win2.blit(i11, (50,208))
 
+        if active:
+            running2 = quest(win2)
+            pygame.display.update()
 
         active = True
         pygame.display.update()
